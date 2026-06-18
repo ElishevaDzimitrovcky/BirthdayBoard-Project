@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { verifyToken } from "../utils/jwt";
+import { verifyToken } from "../src/utils/jwt";
 
 export interface AuthenticatedRequest extends Request {
   user?: {
