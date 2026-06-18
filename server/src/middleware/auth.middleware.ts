@@ -23,6 +23,12 @@ export const requireAuth = (
 
   const token = authHeader.split(" ")[1];
 
+  if (!token) {
+    return res.status(401).json({
+      message: "Authentication required",
+    });
+  }
+
   try {
     const payload = verifyToken(token);
 
@@ -31,9 +37,8 @@ export const requireAuth = (
       email: payload.email,
     };
 
-    next();
-  } catch (error) {
-    console.error("Token verification error:", error);
+    return next();
+  } catch {
     return res.status(401).json({
       message: "Invalid or expired token",
     });
