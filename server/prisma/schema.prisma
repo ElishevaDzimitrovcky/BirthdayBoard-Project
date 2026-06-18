@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    Int              @id @default(autoincrement())
+  email                 String           @unique
+  passwordHash          String
+  createdBirthdayPeople BirthdayPerson[] @relation("CreatedBirthdayPeople")
+  updatedBirthdayPeople BirthdayPerson[] @relation("UpdatedBirthdayPeople")
+}
+
+model BirthdayPerson {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  birthDate   DateTime
+  createdById Int?
+  updatedById Int?
+  createdBy   User?    @relation("CreatedBirthdayPeople", fields: [createdById], references: [id])
+  updatedBy   User?    @relation("UpdatedBirthdayPeople", fields: [updatedById], references: [id])
+
+  @@index([lastName, firstName])
+  @@index([createdById])
+  @@index([updatedById])
+}
