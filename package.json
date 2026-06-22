@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "setup:env": "node -e \"require('fs').writeFileSync('server/.env', 'DATABASE_URL=\\\"mysql://root:kgqgYmKZdxaRJviNhosunmldrcELGNom@turntable.proxy.rlwy.net:58696/railway\\\"\\nJWT_SECRET=\\\"super-secret-dev-key-change-later\\\"\\nPORT=4000\\nCLIENT_URL=\\\"http://localhost:5173\\\"\\nJWT_EXPIRES_IN=\\\"7d\\\"\\n')\"",
+    "setup": "npm run setup:env && cd server && npm run prisma:generate && npm run prisma:migrate && npm run seed",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
